@@ -1,11 +1,14 @@
 #include <array>
 #include <cstdint>
+#include <cstdio>
 #include <exception>
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 #include "graph.h"
 #include "gets.h"
+#include <fstream>
 std::array<std::string, 4> msg = {
                                 "1. Input graph",
                                 "2. Print matrix",
@@ -37,11 +40,23 @@ int main(){
                                         Print_matrix(a.matrix);
                                 break;
                                 case '3':
-                                        dot = convert_graph_to_dot(a);
+                                        {
+                                                std::ofstream in {"graph.gv"};
+                                                if(!in) throw std::runtime_error("Failed to open file");
+                                                dot = convert_graph_to_dot(a);
+                                                in << dot;
+                                                in.close();
+                                        }
                                 break;
                                 case '4':
-                                        full_path(path);
-                                        dot = convert_graph_to_dot_with_path(a, path);
+                                        {
+                                                std::ofstream in {"graph.gv"};
+                                                if(!in) throw std::runtime_error("Failed to open file");
+                                                full_path(path);
+                                                dot = convert_graph_to_dot_with_path(a, path);
+                                                in << dot;
+                                                in.close();
+                                        }
                                 break;
                                 default:
                                         std::cout << "Err input\n";

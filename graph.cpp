@@ -51,11 +51,26 @@ namespace Graph {
         }
 
         std::string convert_graph_to_dot(graph &graph){
-                return std::string();
+                std::string res;
+                res += "graph graphname {\n";
+                for(size_t i(0); i < graph.size - 1; ++i){
+                        for(size_t j(i + 1); j < graph.size; ++j){
+                                res += '\t';
+                                res += char(i + 97);
+                                if(graph.matrix[i][j] == 1){
+                                        res += " -- ";
+                                        res += char(j + 97);
+                                }
+                                res += ";\n";
+                        }
+                }
+                res += "}\n";
+                return res;
         }
 
-        std::string convert_graph_to_dot_with_path(graph &, std::vector<graph_matrix_element>&){
-                return std::string();
+        std::string convert_graph_to_dot_with_path(graph &graph, std::vector<graph_matrix_element>&path){
+                std::string res = convert_graph_to_dot(graph);
+                return res;
         }
 
 }
